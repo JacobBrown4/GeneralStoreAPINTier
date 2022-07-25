@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeneralStore.Models.Products
 {
+     public enum ProductType {grocery, electronic};
     public class ProductCreate
     {
         [Required]
@@ -14,5 +15,7 @@ namespace GeneralStore.Models.Products
         public int QuantityInStock { get; set; }
         [Required]
         public double Price { get; set; }
+        [Required]
+        public ProductType ProductType {get; set;}
     }
 }

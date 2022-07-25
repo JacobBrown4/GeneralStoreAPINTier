@@ -21,6 +21,8 @@ namespace GeneralStore.Data.Entities
         [Required]
         public double Price { get; set; }
 
+        public int ProductType {get; set;}
+
         public virtual ICollection<TransactionEntity> Transactions { get; set; }
     }
 }

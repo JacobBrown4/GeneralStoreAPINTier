@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using GeneralStore.Data;
 using GeneralStore.Data.Entities;
 using GeneralStore.Models.Customer;
+using GeneralStore.Models.Transaction;
 using Microsoft.EntityFrameworkCore;
 
 namespace GeneralStore.Services.Customer
 {
     public class CustomerService : ICustomerService
     {
-        
- private readonly ApplicationDbContext _dbContext;
+
+        private readonly ApplicationDbContext _dbContext;
 
         public CustomerService(ApplicationDbContext context)
         {
@@ -52,7 +53,16 @@ namespace GeneralStore.Services.Customer
             {
                 return new CustomerDetail
                 {
-                   //What do
+                    Id = customerEntity.Id,
+                    FirstName = customerEntity.FirstName,
+                    LastName = customerEntity.LastName,
+                    Transactions = customerEntity.Transactions.Select(t => new TransactionListItemCustomer
+                    {
+                        Id = t.Id,
+                        Product = t.Product.Name,
+                        Quantity = t.Quantity,
+                        TransactionCost = t.Quantity * t.Product.Price
+                    }).ToList()
                 };
             }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GeneralStore.Data;
 using GeneralStore.Data.Entities;
+using GeneralStore.Models.Customer;
 using GeneralStore.Models.Products;
 using GeneralStore.Models.Transaction;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,8 @@ namespace GeneralStore.Services.Product
             {
                 QuantityInStock = request.QuantityInStock,
                 Name = request.Name,
-                Price = request.Price
+                Price = request.Price,
+                ProductType = (int)request.ProductType
             };
             _dbContext.Products.Add(productEntity);
 
@@ -51,20 +53,25 @@ namespace GeneralStore.Services.Product
 
             if (productEntity != null)
             {
-                return new ProductDetail
+                return new ProductDetail // LINQ Language integrated Query
                 {
                     Id = productEntity.Id,
                     Price = productEntity.Price,
                     QuantityInStock = productEntity.QuantityInStock,
                     Name = productEntity.Name,
-                    Transactions = productEntity.Transactions.Select(x => new TransactionListItem
+                    ProductType = (ProductType)productEntity.ProductType,
+                    Transactions = productEntity.Transactions.Select(x => new TransactionListItemProduct
                     {
-                        Customer = x.Customer.FirstName + " " + x.Customer.LastName,
                         Id = x.Id,
-                        Product = x.Product.Name,
-                        Quantity = x.Quantity
+                        Customer = new CustomerListItem{
+                            Id = x.Customer.Id,
+                            FullName = x.Customer.FirstName + " " + x.Customer.LastName
+                        },
+                        Quantity = x.Quantity,
+                        TransactionCost = x.Quantity * productEntity.Price,
 
-                    }).ToList()
+                    }).ToList(),
+                    TransactionTotals = productEntity.Transactions.Select(x=>x.Quantity).ToList().Sum() * productEntity.Price
                 };
             }
 

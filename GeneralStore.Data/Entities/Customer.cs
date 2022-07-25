@@ -20,7 +20,7 @@ namespace GeneralStore.Data.Entities
         public string LastName { get; set; }
         [Required]
         public string Email { get; set; }
-
+        // Lazy loaded FK relationships
         public virtual ICollection<TransactionEntity> Transactions { get; set; }
     }
 }
