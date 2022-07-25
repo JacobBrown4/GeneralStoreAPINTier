@@ -4,18 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using GeneralStore.Models.Transaction;
 
-namespace GeneralStore.Models.Customer
+namespace GeneralStore.Models.Products
 {
-    public class CustomerDetail
+    public class ProductDetail
     {
-        public CustomerDetail()
+        public ProductDetail()
         {
             Transactions = new List<TransactionListItem>();
         }
+
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
+        public string Name { get; set; }
+        public int QuantityInStock { get; set; }
+        public double Price { get; set; }
         public List<TransactionListItem> Transactions { get; set; }
     }
 }

@@ -4,23 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GeneralStore.Data.Entities
+namespace GeneralStore.Models.Customer
 {
-    public class CustomerEntity
+    public class CustomerEdit
     {
-        public CustomerEntity()
-        {
-            Transactions = new HashSet<TransactionEntity>();
-        }
-        [Key]
         public int Id { get; set; }
-        [Required]
+         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
         [Required]
         public string Email { get; set; }
-
-        public virtual ICollection<TransactionEntity> Transactions { get; set; }
     }
 }
